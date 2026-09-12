@@ -1,0 +1,19 @@
+name: Docker React CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t david/docker-react-test -f Dockerfile.dev .
+
+      - name: Run tests
+        run: docker run david/docker-react-test npm run test -- --coverage
